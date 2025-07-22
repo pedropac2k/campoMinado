@@ -1,6 +1,5 @@
 import * as math from "mathjs";
 
-
 class Square {
 	//Toda vez que uma instância for criada ela será inicializada com estes atributos por padrão.
 	//É importante notar que os atributos 'row' e 'column' serão únicos para cada instância pois indentificam o posicionamento dela na matriz.
@@ -12,7 +11,6 @@ class Square {
 		this.nearMines = 0;
 	}
 }
-
 
 
 function criaMatriz(rows, columns){
@@ -55,4 +53,14 @@ function sorteiaMinas(matriz, qtdMinas){
 			//Ativa a mina e adiciona ao contador para termos o controle de quantas minas vão ser ativadas.
 		}
 	}
+}
+
+
+function minasVizinhas(matriz, row, column){
+
+	if(!matriz[row][column].hasMine) //Se o quadrado tiver uma mina não faz sentido computar as minas vizinhas.
+		for(let i=(row-1); i<(row+2); i++)
+			for(let j=(column-1); j<(column+2); j++) //Percorre os quadrados vizinhos 
+				if(i >= 0 && i < matriz.length && j >= 0 && j < matriz[0].length)//Faz a validação das coordenadas para elas não extrapolarem os limites da matriz.
+					matriz[i][j].hasMine ? matriz[row][column].nearMines++ : matriz[row][column].nearMines = matriz[row][column].nearMines; //Computa as minas vizinhas no atributo 'nearMines' da instância se não mantem o mesmo valor.
 }
