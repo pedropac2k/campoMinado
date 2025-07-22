@@ -57,10 +57,40 @@ function sorteiaMinas(matriz, qtdMinas){
 
 
 function minasVizinhas(matriz, row, column){
-
 	if(!matriz[row][column].hasMine) //Se o quadrado tiver uma mina não faz sentido computar as minas vizinhas.
 		for(let i=(row-1); i<(row+2); i++)
 			for(let j=(column-1); j<(column+2); j++) //Percorre os quadrados vizinhos 
 				if(i >= 0 && i < matriz.length && j >= 0 && j < matriz[0].length)//Faz a validação das coordenadas para elas não extrapolarem os limites da matriz.
 					matriz[i][j].hasMine ? matriz[row][column].nearMines++ : matriz[row][column].nearMines = matriz[row][column].nearMines; //Computa as minas vizinhas no atributo 'nearMines' da instância se não mantem o mesmo valor.
+}
+
+
+function computaMinas(matriz){
+	const row = matriz.length;
+	const column = matriz[0].length;
+
+	for(let i=0; i<row; i++)
+		for(let j=0; j<column; j++)
+			minasVizinhas(matriz, i, j);
+}
+
+
+function imprimeMatriz(matriz){
+	const row = matriz.length;
+	const column = matriz[0].length;
+
+	let linha = "";
+	for(let i=0; i<row; i++){
+		for(let j=0; j<column; j++){
+			if(matriz[i][j].hasMine)
+				linha += "[#]";
+			else if(matriz[i][j].nearMines > 0)
+				linha += `[${matriz[i][j].nearMines}]`;
+			else
+				linha += "[ ]";
+			linha += "  ";
+		}
+		console.log(linha + '\n');
+		linha = "";
+	}
 }
